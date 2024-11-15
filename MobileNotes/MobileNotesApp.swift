@@ -2,8 +2,6 @@
 //  MobileNotesApp.swift
 //  MobileNotes
 //
-//  Created by Chris on 11/15/24.
-//
 
 import SwiftUI
 
