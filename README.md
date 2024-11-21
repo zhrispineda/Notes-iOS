@@ -5,7 +5,7 @@ A **work-in-progress** SwiftUI recreation of the iOS & iPadOS Notes app.
 - This personal project is a recreation of Apple's Notes app for iOS and iPadOS.
 
 ## Usage
-Open the project in Xcode 16 and run with either a Simulator instance or a physical device running iOS 18.1 or newer with Developer Mode enabled as a destination.
+Open the project in Xcode and run with either a Simulator instance or a physical device running iOS 18.1 or newer with Developer Mode enabled as a destination.
 
 As this is a personal project for learning Swift and SwiftUI, feel free to download and modify the project for your own personal purposes.
 
