@@ -9,6 +9,9 @@ struct NewNoteView: View {
     @State private var noteText = ""
     @State private var currentDateString = String()
     @FocusState private var isFocused: Bool
+    @State private var selectedMathOption = "Suggest Results"
+    let mathOptions = ["Insert Results", "Suggest Results", "Off"]
+    @State private var debugging = false
     
     var body: some View {
         NavigationStack {
@@ -49,13 +52,55 @@ struct NewNoteView: View {
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Image(systemName: "square.and.arrow.up")
-                            .disabled(noteText.isEmpty)
-                    }
+                    Button("", systemImage: "square.and.arrow.up") {}
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
+                    Menu {
+                        ControlGroup {
+                            Button("Scan", systemImage: "document.viewfinder") {}
+                            Button("Pin", systemImage: "pin.fill") {}
+                            Button("Lock", systemImage: "lock.fill") {}
+                        }
+                        Button("Find in Note", systemImage: "magnifyingglass") {}
+                        Button("Move Note", systemImage: "folder") {}
+                        Menu {
+                            Picker("Math Results", selection: $selectedMathOption) {
+                                ForEach(mathOptions, id: \.self) { option in
+                                    Text(option)
+                                }
+                            }
+                        } label: {
+                            Label("Math Results", systemImage: "equal.circle")
+                            Text(selectedMathOption)
+                        }
+                        Menu {
+                            Section {
+                                Button("Clear Menu") {}
+                            }
+                        } label: {
+                            Label("Recent Notes", systemImage: "clock")
+                        }
+                        Button("Lines & Grids", systemImage: "rectangle.split.3x3") {}
+                        Menu {
+                            Button("Set All to Small") {}
+                            Button("Set All to Large") {}
+                        } label: {
+                            Label("Attachment View", systemImage: "rectangle.3.group")
+                        }
+                        Button("Delete", systemImage: "trash", role: .destructive) {}
+                        
+                        if debugging {
+                            Section {
+                                Menu {
+                                    Section {
+                                        Button("Handwriting Feedback", systemImage: "exclamationmark.bubble") {}
+                                    }
+                                } label: {
+                                    Label("Debug", systemImage: "ant")
+                                }
+                            }
+                        }
+                    } label: {
                         Image(systemName: "ellipsis.circle")
                     }
                 }
@@ -69,24 +114,18 @@ struct NewNoteView: View {
                 }
                 ToolbarItem(placement: .bottomBar) {
                     HStack {
-                        Button {} label: {
-                            Image(systemName: "checklist")
-                        }
+                        Button("", systemImage: "checklist") {}
                         Spacer()
-                        Button {} label: {
-                            Image(systemName: "paperclip")
-                        }
+                        Button("", systemImage: "paperclip") {}
                         Spacer()
-                        Button {} label: {
-                            Image(systemName: "pencil.tip.crop.circle")
-                        }
+                        Button("", systemImage: "pencil.tip.crop.circle") {}
                         Spacer()
                         Button {} label: {
                             Image(_internalSystemName: "apple.writing.tools")
                         }
                         Spacer()
                         Button {} label: {
-                            Image(_internalSystemName: "square.and.pencil")
+                            Image(systemName: "square.and.pencil")
                                 .disabled(noteText.isEmpty)
                         }
                     }

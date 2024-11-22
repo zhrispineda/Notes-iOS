@@ -34,9 +34,7 @@ struct ContentView: View {
                     }
                     ToolbarItem(placement: .bottomBar) {
                         if internalDebugging {
-                            Button {} label: {
-                                Image(systemName: "gear")
-                            }
+                            Button("", systemImage: "gear") {}
                         } else {
                             NavigationLink(destination: NewNoteView()) {
                                 Image(systemName: "square.and.pencil")
