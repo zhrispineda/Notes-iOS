@@ -6,39 +6,43 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Variables
     @AppStorage("ShouldShowWelcomeScreen") private var shouldShowWelcomeScreen = true
-    @State private var internalDebugging = false
     @State private var newFolderName = "New Folder"
-    @State private var searchText = String()
+    @State private var searchText = ""
     @State private var showingNewFolderPopover = false
     
     var body: some View {
         NavigationStack {
             if !shouldShowWelcomeScreen {
                 List {
+                    NavigationLink {} label: {
+                        Label {
+                            LabeledContent("Notes", value: "0")
+                        } icon: {
+                            Image(systemName: "folder")
+                        }
+                    }
                 }
                 .navigationTitle("Folders")
                 .navigationBarTitleDisplayMode(.large)
-                .searchable(text: $searchText, placement: .toolbar)
+                .searchable(text: $searchText)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        EditButton()
-                    }
-                    ToolbarItem(placement: .bottomBar) {
                         Button {
                             showingNewFolderPopover.toggle()
                         } label: {
                             Image(systemName: "folder.badge.plus")
                         }
                     }
+                    ToolbarItem(placement: .topBarTrailing) {
+                        EditButton()
+                    }
+                    
+                    DefaultToolbarItem(kind: .search, placement: .bottomBar)
+                    ToolbarSpacer(.fixed, placement: .bottomBar)
                     ToolbarItem(placement: .bottomBar) {
-                        if internalDebugging {
-                            Button("", systemImage: "gear") {}
-                        } else {
-                            NavigationLink(destination: NewNoteView()) {
-                                Image(systemName: "square.and.pencil")
-                            }
+                        NavigationLink(destination: NewNoteView()) {
+                            Image(systemName: "square.and.pencil")
                         }
                     }
                 }
@@ -50,12 +54,12 @@ struct ContentView: View {
                     TextField("", text: $newFolderName)
                         .toolbar {
                             ToolbarItem(placement: .topBarLeading) {
-                                Button("Cancel") {
+                                Button(role: .cancel) {
                                     showingNewFolderPopover.toggle()
                                 }
                             }
                             ToolbarItem(placement: .topBarTrailing) {
-                                Button("Done") {
+                                Button(role: .confirm) {
                                     showingNewFolderPopover.toggle()
                                     newFolderName = "New Folder"
                                 }
