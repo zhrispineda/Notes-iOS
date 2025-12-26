@@ -6,12 +6,12 @@
 import SwiftUI
 
 struct NewNoteView: View {
-    @State private var noteText = ""
-    @State private var currentDateString = String()
     @FocusState private var isFocused: Bool
+    @State private var noteText = ""
+    @State private var currentDateString = ""
     @State private var selectedMathOption = "Suggest Results"
-    let mathOptions = ["Insert Results", "Suggest Results", "Off"]
     @State private var debugging = false
+    private let mathOptions = ["Insert Results", "Suggest Results", "Off"]
     
     var body: some View {
         NavigationStack {
@@ -39,20 +39,20 @@ struct NewNoteView: View {
                 currentDateString = formatter.string(from: currentDate)
             }
             .toolbar {
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button {} label: {
+//                        Image(systemName: "arrow.uturn.backward.circle")
+//                            .disabled(true)
+//                    }
+//                }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button {} label: {
+//                        Image(systemName: "arrow.uturn.forward.circle")
+//                            .disabled(true)
+//                    }
+//                }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Image(systemName: "arrow.uturn.backward.circle")
-                            .disabled(true)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {} label: {
-                        Image(systemName: "arrow.uturn.forward.circle")
-                            .disabled(true)
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("", systemImage: "square.and.arrow.up") {}
+                    Button("", systemImage: "square.and.arrow.up") {}.disabled(true)
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
@@ -101,12 +101,12 @@ struct NewNoteView: View {
                             }
                         }
                     } label: {
-                        Image(systemName: "ellipsis.circle")
+                        Image(systemName: "ellipsis")
                     }
                 }
                 if isFocused {
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Done") {
+                        Button(role: .confirm) {
                             isFocused = false
                         }
                         .fontWeight(.medium)
@@ -121,7 +121,7 @@ struct NewNoteView: View {
                         Button("", systemImage: "pencil.tip.crop.circle") {}
                         Spacer()
                         Button {} label: {
-                            Image(_internalSystemName: "apple.writing.tools")
+                            Image(systemName: "apple.writing.tools")
                         }
                         Spacer()
                         Button {} label: {
